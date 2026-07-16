@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MP Veículos — Seminovos com procedência</title>
+<meta name="description" content="Catálogo de veículos seminovos da MP Veículos. Carros revisados, com procedência verificada e condições facilitadas de pagamento.">
+<meta property="og:title" content="MP Veículos — Seminovos com procedência">
+<meta property="og:description" content="Confira o estoque de veículos seminovos da MP Veículos e fale direto com nossa equipe.">
+<meta property="og:image" content="assets/logo.jpeg">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div>
+      <a id="topPhone" href="#"></a>
+      <span class="sep">|</span>
+      <a id="topEmail" href="#"></a>
+    </div>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <a id="topInstagram" href="#" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+        <span id="topInstagramLabel"></span>
+      </a>
+      <span id="topHours"></span>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#topo">
+      <img src="assets/logo.png" alt="Logo MP Veículos">
+    </a>
+    <nav id="nav">
+      <a href="#topo">Início</a>
+      <a href="#estoque">Estoque</a>
+      <a href="#diferenciais">Diferenciais</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <a class="btn btn-primary" href="#contato">Fale conosco</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="topo">
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="eyebrow">Estoque atualizado toda semana</div>
+      <h1>Seu próximo carro está <span>aqui</span>.</h1>
+      <p>Veículos revisados, com procedência verificada e condições facilitadas de pagamento. Confira o estoque completo da MP Veículos e fale direto com nossa equipe.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#estoque">Ver estoque</a>
+        <a class="btn btn-ghost" href="#contato">Falar com um vendedor</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div><div class="num" id="statTotal">08</div><div class="lbl">Carros disponíveis</div></div>
+      <div><div class="num">100%</div><div class="lbl">Procedência verificada</div></div>
+      <div><div class="num" id="statAnos">12+</div><div class="lbl">Anos de mercado</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="filterbar">
+    <div class="field">
+      <label for="fSearch">Buscar</label>
+      <input type="text" id="fSearch" placeholder="Modelo, marca...">
+    </div>
+    <div class="field">
+      <label for="fTipo">Tipo</label>
+      <select id="fTipo">
+        <option value="">Todos</option>
+        <option value="hatch">Hatch</option>
+        <option value="sedan">Sedã</option>
+        <option value="suv">SUV</option>
+        <option value="picape">Picape</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="fCambio">Câmbio</label>
+      <select id="fCambio">
+        <option value="">Todos</option>
+        <option value="Manual">Manual</option>
+        <option value="Automático">Automático</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="fOrdem">Ordenar por</label>
+      <select id="fOrdem">
+        <option value="relevancia">Relevância</option>
+        <option value="menor">Menor preço</option>
+        <option value="maior">Maior preço</option>
+        <option value="novo">Ano mais novo</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" id="fReset" style="background:var(--onyx);">Limpar</button>
+  </div>
+</div>
+
+<section class="section" id="estoque">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Estoque MP Veículos</h2>
+        <p>Clique em um veículo para ver mais fotos, detalhes e falar com um vendedor.</p>
+      </div>
+      <div class="count-tag" id="resultCount">08 veículos encontrados</div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="why" id="diferenciais">
+  <div class="wrap section">
+    <div class="section-head">
+      <div>
+        <h2>Por que comprar na MP</h2>
+        <p>Transparência do início ao fim da negociação, do teste-drive à entrega das chaves.</p>
+      </div>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="idx">// 01</div>
+        <h3>Procedência verificada</h3>
+        <p>Todo veículo passa por checagem de documentação e histórico antes de entrar no estoque.</p>
+      </div>
+      <div class="why-item">
+        <div class="idx">// 02</div>
+        <h3>Revisão completa</h3>
+        <p>Inspeção mecânica e de itens de segurança realizada antes da divulgação do carro.</p>
+      </div>
+      <div class="why-item">
+        <div class="idx">// 03</div>
+        <h3>Financiamento facilitado</h3>
+        <p>Trabalhamos com as principais financeiras para encontrar as melhores condições para você.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contato">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Fale com a gente</h2>
+        <p>Tire dúvidas sobre um veículo, agende um teste-drive ou peça uma proposta de financiamento.</p>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="item">
+          <div class="icon-box">📍</div>
+          <div>
+            <h4>Endereço</h4>
+            <p id="contactAddress"></p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="icon-box">📞</div>
+          <div>
+            <h4>Telefone / WhatsApp</h4>
+            <a id="contactPhone" href="#"></a>
+          </div>
+        </div>
+        <div class="item">
+          <div class="icon-box">✉️</div>
+          <div>
+            <h4>E-mail</h4>
+            <a id="contactEmail" href="#"></a>
+          </div>
+        </div>
+        <div class="item">
+          <div class="icon-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div>
+            <h4>Instagram</h4>
+            <a id="contactInstagram" href="#" target="_blank" rel="noopener"></a>
+          </div>
+        </div>
+        <table class="hours-table" id="hoursTable"></table>
+      </div>
+
+      <div class="form-card">
+        <div class="form-row">
+          <label for="cNome">Nome</label>
+          <input type="text" id="cNome" placeholder="Seu nome completo">
+        </div>
+        <div class="form-row">
+          <label for="cTelefone">Telefone</label>
+          <input type="text" id="cTelefone" placeholder="(83) 90000-0000">
+        </div>
+        <div class="form-row">
+          <label for="cInteresse">Veículo de interesse (opcional)</label>
+          <input type="text" id="cInteresse" placeholder="Ex: Toyota Corolla XEi 2020">
+        </div>
+        <div class="form-row">
+          <label for="cMensagem">Mensagem</label>
+          <textarea id="cMensagem" placeholder="Como podemos ajudar?"></textarea>
+        </div>
+        <button class="btn btn-primary" id="sendWhats" style="width:100%; justify-content:center;">Enviar via WhatsApp</button>
+        <p class="form-note">Ao enviar, você será redirecionado ao WhatsApp da loja com sua mensagem já preenchida.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand-mini">
+      <img src="assets/logo.png" alt="Logo MP Veículos">
+      MP Veículos
+    </div>
+    <a id="footerInstagram" href="#" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:6px; color:#fff;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+      <span id="footerInstagramLabel"></span>
+    </a>
+    <div>© <span id="year"></span> MP Veículos. Todos os direitos reservados.</div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-media" id="modalMedia"></div>
+    <div class="modal-thumbs" id="modalThumbs"></div>
+    <div class="modal-body">
+      <h3 id="modalTitle"></h3>
+      <div class="card-sub" id="modalSub"></div>
+      <div class="modal-specs" id="modalSpecs"></div>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-footer">
+        <div class="price" id="modalPrice"></div>
+        <a class="btn btn-primary" id="modalWhats" target="_blank" rel="noopener">Falar no WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/vehicles.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
