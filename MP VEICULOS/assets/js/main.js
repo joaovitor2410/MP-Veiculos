@@ -128,30 +128,34 @@ const overlay = document.getElementById('modalOverlay');
 let currentVehicle = null;
 let currentPhotoIndex = 0;
 
-function setModalImage(v, index){
+// ===== SETAR IMAGEM E ATUALIZAR NAVEGAÇÃO =====
+function setModalImage(v, index) {
   currentPhotoIndex = index;
   const media = document.getElementById('modalMedia');
+  // Remove imagem ou svg anterior (mantém os botões e contador)
+  media.querySelectorAll('img.modal-main-img, svg').forEach(el => el.remove());
+
   const hasPhotos = v.fotos && v.fotos.length;
-  media.querySelectorAll('img.modal-main-img').forEach(el => el.remove());
-  media.querySelectorAll('svg').forEach(el => el.remove());
-  if(hasPhotos){
+  if (hasPhotos) {
     const img = document.createElement('img');
     img.className = 'modal-main-img';
     img.src = v.fotos[index];
     img.alt = `${v.marca} ${v.modelo} - foto ${index+1}`;
-    media.appendChild(img);
+    media.prepend(img); // coloca no início para ficar atrás dos elementos absolutos
   } else {
-    media.insertAdjacentHTML('beforeend', silhouettes[v.tipo]);
+    // Se não tem foto, insere a silhueta
+    media.insertAdjacentHTML('afterbegin', silhouettes[v.tipo]);
   }
 
+  // Atualiza contador e visibilidade das setas
   const nav = document.getElementById('modalNav');
   const counter = document.getElementById('modalPhotoCount');
-  if(hasPhotos && v.fotos.length > 1){
-    nav.style.display = 'flex';
+  if (hasPhotos && v.fotos.length > 1) {
+    nav.classList.remove('hidden');
     counter.style.display = 'block';
     counter.textContent = `${index+1} / ${v.fotos.length}`;
   } else {
-    nav.style.display = 'none';
+    nav.classList.add('hidden');
     counter.style.display = 'none';
   }
 }
@@ -167,21 +171,27 @@ function showPrevPhoto(){
   setModalImage(currentVehicle, prev);
 }
 
-function openModal(v){
+// ===== MODAL – ABRIR =====
+function openModal(v) {
   currentVehicle = v;
-  document.getElementById('modalMedia').innerHTML = `
+  const media = document.getElementById('modalMedia');
+  media.innerHTML = `
     <button class="modal-close" id="modalClose" aria-label="Fechar">✕</button>
-    <div class="modal-nav" id="modalNav">
-      <button class="modal-nav-btn" id="modalPrev" aria-label="Foto anterior">‹</button>
-      <button class="modal-nav-btn" id="modalNext" aria-label="Próxima foto">›</button>
-    </div>
     <div class="modal-photo-count" id="modalPhotoCount"></div>
+    <div class="modal-nav-bottom" id="modalNav">
+      <button id="modalPrev" aria-label="Foto anterior">‹</button>
+      <button id="modalNext" aria-label="Próxima foto">›</button>
+    </div>
   `;
+  // Adiciona a primeira foto (ou ilustração) e configura contador/navegação
   setModalImage(v, 0);
+
+  // Eventos dos botões
   document.getElementById('modalClose').addEventListener('click', closeModal);
   document.getElementById('modalPrev').addEventListener('click', showPrevPhoto);
   document.getElementById('modalNext').addEventListener('click', showNextPhoto);
 
+  // Preenche os detalhes do veículo
   document.getElementById('modalTitle').textContent = `${v.marca} ${v.modelo}`;
   document.getElementById('modalSub').textContent = `${tipoLabel[v.tipo]} · ${v.cor} · Estoque #MP0${v.id}`;
   document.getElementById('modalSpecs').innerHTML = `
@@ -196,6 +206,7 @@ function openModal(v){
   document.getElementById('modalWhats').href = `https://wa.me/${SITE_CONFIG.whatsapp}?text=${msg}`;
   overlay.classList.add('open');
 }
+
 function closeModal(){ overlay.classList.remove('open'); currentVehicle = null; }
 overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
 document.addEventListener('keydown', (e) => {
@@ -222,5 +233,48 @@ document.getElementById('sendWhats').addEventListener('click', () => {
 const nav = document.getElementById('nav');
 document.getElementById('menuToggle').addEventListener('click', () => nav.classList.toggle('open'));
 nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+// ========== HERO SLIDER AUTOMÁTICO ==========
+const heroImages = [
+  'assets/js/clientes/cliente1.jpg',
+  'assets/js/clientes/cliente2.jpg',
+  'assets/js/clientes/cliente3.jpg'
+];
+
+let currentSlide = 0;
+const track = document.getElementById('heroSliderTrack');
+const dotsContainer = document.getElementById('heroSliderDots');
+
+function buildDots() {
+  dotsContainer.innerHTML = '';
+  heroImages.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.className = `dot ${i === 0 ? 'active' : ''}`;
+    dot.dataset.index = i;
+    dotsContainer.appendChild(dot);
+  });
+}
+
+function goToSlide(index) {
+  if (index < 0) index = heroImages.length - 1;
+  if (index >= heroImages.length) index = 0;
+  currentSlide = index;
+  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+  document.querySelectorAll('.dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === currentSlide);
+  });
+}
+
+function startHeroSlider() {
+  if (heroImages.length === 0) return;
+  buildDots();
+  // Insere as imagens no track (já estão no HTML, mas garantimos)
+  // Apenas inicia o intervalo
+  setInterval(() => {
+    goToSlide(currentSlide + 1);
+  }, 4000);
+}
+
+startHeroSlider();
 
 render();
