@@ -25,6 +25,14 @@ function applyConfig(){
   hoursTable.innerHTML = SITE_CONFIG.horarios.map(h => `<tr><td>${h.dia}</td><td>${h.hora}</td></tr>`).join('');
 
   document.getElementById('statAnos').textContent = SITE_CONFIG.anosDeMercado;
+
+  // Botão flutuante do WhatsApp
+  const floatMsg = encodeURIComponent('Olá! Vim pelo site da MP Veículos e gostaria de mais informações.');
+  document.getElementById('whatsappFloat').href = `https://wa.me/${SITE_CONFIG.whatsapp}?text=${floatMsg}`;
+
+  // Mapa incorporado com o endereço da loja
+  const mapQuery = encodeURIComponent(SITE_CONFIG.endereco);
+  document.getElementById('contactMap').src = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
 }
 applyConfig();
 
