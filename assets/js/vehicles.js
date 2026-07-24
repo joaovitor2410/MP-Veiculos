@@ -48,6 +48,7 @@ const VEHICLES = [
     cor: "Preto",
     preco: 96900,
     desc: "Spin 1.8 Active completo, único dono, todas as revisões feitas na concessionária. Ar-condicionado, direção elétrica, multimídia de fábrica, câmera de ré, vidros elétricos .",
+    destaques: ["Único dono", "Revisões na concessionária", "Câmbio automático", "Ar-condicionado", "Direção elétrica", "Multimídia de fábrica", "Câmera de ré", "Vidros elétricos"],
     fotos: ["assets/js/vehicles/spin/spin1.jpg", "assets/js/vehicles/spin/spin2.jpg", "assets/js/vehicles/spin/spin3.jpg", "assets/js/vehicles/spin/spin4.jpg", "assets/js/vehicles/spin/spin5.jpg", "assets/js/vehicles/spin/spin6.jpg", "assets/js/vehicles/spin/spin7.jpg", "assets/js/vehicles/spin/spin8.jpg", "assets/js/vehicles/spin/spin9.jpg", "assets/js/vehicles/spin/spin10.jpg"]
   },
   {
@@ -62,6 +63,7 @@ const VEHICLES = [
     cor: "Preto",
     preco: 49900,
     desc: "CHEVROLET PRISMA LTZ 1.4 2014, sedan completo, econômico e muito bem conservado. Equipado com motor 1.4, direção hidráulica, ar-condicionado, airbag duplo, alarme, travas elétricas, vidros elétricos, retrovisores elétricos, kit multimídia MyLink, câmera de ré, sensor de ré, computador de bordo e rodas aro 15. Veículo emplacado 2026, pronto para rodar, oferecendo conforto, segurança e excelente custo-benefício para o dia a dia.",
+    destaques: ["Motor 1.4 econômico", "Direção hidráulica", "Ar-condicionado", "Airbag duplo", "Multimídia MyLink", "Câmera + sensor de ré", "Computador de bordo", "Emplacado 2026"],
     fotos: ["assets/js/vehicles/prisma/prisma1.jpg", "assets/js/vehicles/prisma/prisma2.jpg", "assets/js/vehicles/prisma/prisma3.jpg", "assets/js/vehicles/prisma/prisma4.jpg", "assets/js/vehicles/prisma/prisma5.jpg", "assets/js/vehicles/prisma/prisma6.jpg", "assets/js/vehicles/prisma/prisma7.jpg", "assets/js/vehicles/prisma/prisma8.jpg", "assets/js/vehicles/prisma/prisma9.jpg", "assets/js/vehicles/prisma/prisma10.jpg", "assets/js/vehicles/prisma/prisma11.jpg", "assets/js/vehicles/prisma/prisma12.jpg", "assets/js/vehicles/prisma/prisma13.jpg", "assets/js/vehicles/prisma/prisma14.jpg"]
   },
   {
@@ -76,6 +78,7 @@ const VEHICLES = [
     cor: "Prata",
     preco: 35900,
     desc: "CHEVROLET AGILE LTZ 1.4 2013, hatch completo, confortável e muito bem conservado. Equipado com motor 1.4, direção elétrica, ar-condicionado, airbag duplo, alarme, travas elétricas, vidros elétricos, retrovisores elétricos, som, câmera de ré, sensor de ré, computador de bordo e rodas aro 15. Veículo emplacado 2026, pronto para rodar, unindo economia, conforto, segurança e excelente desempenho para o dia a dia.",
+    destaques: ["Motor 1.4", "Direção elétrica", "Ar-condicionado", "Airbag duplo", "Câmera + sensor de ré", "Computador de bordo", "Rodas aro 15", "Emplacado 2026"],
     fotos: ["assets/js/vehicles/agile/agile1.jpeg", "assets/js/vehicles/agile/agile2.jpeg", "assets/js/vehicles/agile/agile3.jpeg", "assets/js/vehicles/agile/agile4.jpeg", "assets/js/vehicles/agile/agile5.jpeg", "assets/js/vehicles/agile/agile6.jpeg", "assets/js/vehicles/agile/agile7.jpeg", "assets/js/vehicles/agile/agile8.jpeg", "assets/js/vehicles/agile/agile9.jpeg", "assets/js/vehicles/agile/agile10.jpeg", "assets/js/vehicles/agile/agile11.jpeg", "assets/js/vehicles/agile/agile12.jpeg","assets/js/vehicles/agile/agile14.jpeg", "assets/js/vehicles/agile/agile15.jpeg"]
   },
   {
@@ -90,6 +93,8 @@ const VEHICLES = [
     cor: "Cinza",
     preco: 42900,
     desc: "CHEVROLET MONTANA LS 1.4 2012, picape versátil, econômica e muito bem conservada. Equipada com motor 1.4, direção hidráulica, ar-condicionado, airbag duplo, alarme, travas elétricas, vidros elétricos, retrovisores manuais, som, sensor de ré e rodas aro 15. Veículo emplacado 2026, pronto para rodar, ideal para quem busca praticidade, economia e resistência tanto para o trabalho quanto para o uso diário.",
+    destaques: ["Motor 1.4", "Direção hidráulica", "Ar-condicionado", "Airbag duplo", "Sensor de ré", "Rodas aro 15", "Emplacado 2026"],
+    capaFoco: "20%",
     fotos: ["assets/js/vehicles/montana/montana1.jpeg", "assets/js/vehicles/montana/montana2.jpeg", "assets/js/vehicles/montana/montana3.jpeg", "assets/js/vehicles/montana/montana4.jpeg", "assets/js/vehicles/montana/montana5.jpeg", "assets/js/vehicles/montana/montana6.jpeg", "assets/js/vehicles/montana/montana7.jpeg", "assets/js/vehicles/montana/montana8.jpeg", "assets/js/vehicles/montana/montana9.jpeg", "assets/js/vehicles/montana/montana10.jpeg", "assets/js/vehicles/montana/montana11.jpeg"]
   },
   {
@@ -104,6 +109,7 @@ const VEHICLES = [
     cor: "Branco",
     preco: 98900,
     desc: "FIAT STRADA FREEDOM 1.3 CD 2024, único dono, picape moderna, completa e em excelente estado de conservação. Equipada com motor 1.3, direção elétrica, airbag duplo, ar-condicionado, alarme com chave canivete, travas elétricas, vidros elétricos, retrovisores elétricos, som original, sensor de ré, computador de bordo e rodas aro 15. Veículo emplacado 2026, pronto para rodar, oferecendo conforto, tecnologia, economia e a versatilidade ideal para o trabalho e o uso diário.",
+    destaques: ["Único dono", "Motor 1.3", "Direção elétrica", "Airbag duplo", "Sensor de ré", "Computador de bordo", "Rodas aro 15", "Emplacado 2026"],
     fotos: ["assets/js/vehicles/strada/strada1.jpeg", "assets/js/vehicles/strada/strada2.jpeg", "assets/js/vehicles/strada/strada3.jpeg", "assets/js/vehicles/strada/strada4.jpeg", "assets/js/vehicles/strada/strada5.jpeg", "assets/js/vehicles/strada/strada6.jpeg", "assets/js/vehicles/strada/strada7.jpeg", "assets/js/vehicles/strada/strada8.jpeg", "assets/js/vehicles/strada/strada9.jpeg", "assets/js/vehicles/strada/strada10.jpeg", "assets/js/vehicles/strada/strada11.jpeg", "assets/js/vehicles/strada/strada12.jpeg"]
   },
 

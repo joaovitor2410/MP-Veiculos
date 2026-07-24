@@ -43,6 +43,7 @@
       <a href="#topo">Início</a>
       <a href="#estoque">Estoque</a>
       <a href="#diferenciais">Diferenciais</a>
+      <a href="#simulador">Financiamento</a>
       <a href="#contato">Contato</a>
     </nav>
     <div style="display:flex; align-items:center; gap:10px;">
@@ -55,11 +56,9 @@
 <section class="hero" id="topo">
   <div class="wrap">
     <div class="hero-slider">
-  <div class="slider-track" id="heroSliderTrack">
-    <img src="assets/js/clientes/cliente1.jpg" alt="Cliente com carro">
-    <img src="assets/js/clientes/cliente2.jpg" alt="Cliente com carro">
-    <img src="assets/js/clientes/cliente3.jpg" alt="Cliente com carro">
-  </div>
+  <div class="slider-track" id="heroSliderTrack"></div>
+  <button class="slider-arrow prev" id="heroPrev" aria-label="Foto anterior">‹</button>
+  <button class="slider-arrow next" id="heroNext" aria-label="Próxima foto">›</button>
   <div class="slider-dots" id="heroSliderDots"></div>
 </div>
     <div class="hero-inner">
@@ -152,6 +151,76 @@
         <div class="idx">// 03</div>
         <h3>Financiamento facilitado</h3>
         <p>Trabalhamos com as principais financeiras para encontrar as melhores condições para você.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section simulator-section" id="simulador">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Simule seu financiamento</h2>
+        <p>Escolha um veículo do estoque ou digite um valor e veja uma estimativa de parcelas na hora.</p>
+      </div>
+    </div>
+    <div class="simulator-grid">
+      <div class="simulator-card">
+        <div class="form-row">
+          <label for="simVeiculo">Veículo do estoque (opcional)</label>
+          <select id="simVeiculo">
+            <option value="">Valor personalizado</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="simValor">Valor do veículo</label>
+          <input type="text" id="simValor" inputmode="numeric" placeholder="R$ 0">
+        </div>
+        <div class="form-row">
+          <label for="simEntrada">Valor de entrada</label>
+          <input type="text" id="simEntrada" inputmode="numeric" placeholder="R$ 0 (pode deixar em branco)">
+        </div>
+        <div class="form-row">
+          <label for="simParcelas">Número de parcelas</label>
+          <select id="simParcelas">
+            <option value="12">12x</option>
+            <option value="24">24x</option>
+            <option value="36" selected>36x</option>
+            <option value="48">48x</option>
+            <option value="60">60x</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="simCalcular" style="width:100%; justify-content:center;">Calcular parcela</button>
+      </div>
+      <div class="simulator-result" id="simResult">
+        <div class="sim-placeholder">Preencha os dados ao lado para ver uma estimativa de parcelas.</div>
+      </div>
+    </div>
+    <p class="sim-disclaimer">*Simulação com fins ilustrativos (taxa referencial de 1,99% ao mês), sujeita a análise e aprovação de crédito junto à financeira. Fale com nossa equipe para uma proposta oficial e sem compromisso.</p>
+
+    <div class="payment-methods">
+      <h3>Formas de pagamento aceitas</h3>
+      <div class="payment-grid">
+        <div class="payment-card">
+          <div class="picon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="pname">PIX / Dinheiro</div>
+          <div class="pdesc">À vista, com condições especiais</div>
+        </div>
+        <div class="payment-card">
+          <div class="picon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+          <div class="pname">Cartão</div>
+          <div class="pdesc">Débito ou crédito</div>
+        </div>
+        <div class="payment-card">
+          <div class="picon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M8 6V4h8v2"/><line x1="3" y1="11" x2="21" y2="11"/></svg></div>
+          <div class="pname">Financiamento</div>
+          <div class="pdesc">Principais bancos e financeiras</div>
+        </div>
+        <div class="payment-card">
+          <div class="picon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+          <div class="pname">Seu carro na troca</div>
+          <div class="pdesc">Avaliamos o seu usado</div>
+        </div>
       </div>
     </div>
   </div>
@@ -250,12 +319,27 @@
       <h3 id="modalTitle"></h3>
       <div class="card-sub" id="modalSub"></div>
       <div class="modal-specs" id="modalSpecs"></div>
-      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-highlights" id="modalHighlights"></div>
+      <div class="modal-desc-wrap">
+        <h4>Sobre este veículo</h4>
+        <p class="modal-desc" id="modalDesc"></p>
+      </div>
       <div class="modal-footer">
         <div class="price" id="modalPrice"></div>
         <a class="btn btn-primary" id="modalWhats" target="_blank" rel="noopener">Falar no WhatsApp</a>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="lightbox-overlay" id="lightboxOverlay">
+  <div class="lightbox-stage" id="lightboxStage">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Fechar ampliação">✕</button>
+    <div class="lightbox-count" id="lightboxCount"></div>
+    <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Foto anterior">‹</button>
+    <img id="lightboxImg" src="" alt="">
+    <button class="lightbox-nav next" id="lightboxNext" aria-label="Próxima foto">›</button>
+    <div class="lightbox-hint">Clique na foto para ampliar · arraste para mover</div>
   </div>
 </div>
 
