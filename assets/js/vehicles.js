@@ -18,8 +18,8 @@
 // (Settings > API, no painel do Supabase). A "anon key" é pública por
 // natureza — ela só permite leitura, protegida pelas políticas (RLS)
 // definidas em database/schema.sql. Não é um segredo.
-const SUPABASE_URL = "COLE_AQUI_A_URL_DO_SEU_PROJETO_SUPABASE";
-const SUPABASE_ANON_KEY = "COLE_AQUI_A_ANON_KEY_DO_SEU_PROJETO_SUPABASE";
+const SUPABASE_URL = "https://yamvepgzmtvryuzsufev.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_6D5y3XSEpAmanXGK8LM8xg_V_7qKrLd";
 
 let VEHICLES = [];
 
