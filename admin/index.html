@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel Admin — MP Veículos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- ---------- LOGIN ---------- -->
+<section id="viewLogin" class="admin-login">
+  <form id="loginForm" class="admin-login-card">
+    <h1>MP Veículos</h1>
+    <p class="admin-login-sub">Painel administrativo</p>
+    <div class="field">
+      <label for="loginEmail">E-mail</label>
+      <input type="email" id="loginEmail" required autocomplete="username">
+    </div>
+    <div class="field">
+      <label for="loginSenha">Senha</label>
+      <input type="password" id="loginSenha" required autocomplete="current-password">
+    </div>
+    <div id="loginError" class="admin-error" hidden></div>
+    <button type="submit" class="btn btn-primary admin-full">Entrar</button>
+  </form>
+</section>
+
+<!-- ---------- LISTA DE VEÍCULOS ---------- -->
+<section id="viewList" class="admin-app" hidden>
+  <header class="admin-topbar">
+    <div class="admin-topbar-inner">
+      <span class="admin-brand">MP Veículos <small>admin</small></span>
+      <button id="btnLogout" class="btn btn-ghost admin-btn-sm">Sair</button>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <div class="admin-main-head">
+      <h2>Estoque</h2>
+      <button id="btnNovo" class="btn btn-primary">+ Novo veículo</button>
+    </div>
+    <div id="listStatus" class="admin-status"></div>
+    <div id="listGrid" class="admin-grid"></div>
+  </main>
+</section>
+
+<!-- ---------- FORMULÁRIO (novo / editar) ---------- -->
+<section id="viewForm" class="admin-app" hidden>
+  <header class="admin-topbar">
+    <div class="admin-topbar-inner">
+      <button id="btnVoltar" class="btn btn-ghost admin-btn-sm">‹ Voltar</button>
+      <span class="admin-brand" id="formTitle">Novo veículo</span>
+      <span style="width:70px"></span>
+    </div>
+  </header>
+
+  <main class="admin-main admin-form-wrap">
+    <form id="vehicleForm">
+      <div class="form-grid">
+        <div class="field">
+          <label for="fMarca">Marca *</label>
+          <input id="fMarca" required placeholder="Ex: Chevrolet">
+        </div>
+        <div class="field">
+          <label for="fModelo">Modelo *</label>
+          <input id="fModelo" required placeholder="Ex: Onix LT 1.0">
+        </div>
+        <div class="field">
+          <label for="fTipo">Tipo *</label>
+          <select id="fTipo" required>
+            <option value="hatch">Hatch</option>
+            <option value="sedan">Sedã</option>
+            <option value="suv">SUV</option>
+            <option value="picape">Picape</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fAno">Ano *</label>
+          <input id="fAno" type="number" required placeholder="2023">
+        </div>
+        <div class="field">
+          <label for="fKm">Km rodados *</label>
+          <input id="fKm" type="number" required placeholder="48000">
+        </div>
+        <div class="field">
+          <label for="fCambio">Câmbio *</label>
+          <select id="fCambio" required>
+            <option value="Manual">Manual</option>
+            <option value="Automático">Automático</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fCombustivel">Combustível *</label>
+          <input id="fCombustivel" required placeholder="Flex, Diesel, Híbrido...">
+        </div>
+        <div class="field">
+          <label for="fCor">Cor *</label>
+          <input id="fCor" required placeholder="Ex: Preto">
+        </div>
+        <div class="field">
+          <label for="fPreco">Preço (R$) *</label>
+          <input id="fPreco" type="number" step="1" required placeholder="59900">
+        </div>
+        <div class="field">
+          <label for="fCapaFoco">Enquadramento da capa (opcional)</label>
+          <input id="fCapaFoco" placeholder='Ex: 20% — só se a miniatura cortar o carro'>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="fDesc">Descrição</label>
+        <textarea id="fDesc" rows="4" placeholder="Texto que aparece nos detalhes do veículo"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="fDestaqueInput">Destaques</label>
+        <div id="chipList" class="chip-list"></div>
+        <input id="fDestaqueInput" placeholder="Digite e aperte Enter (ex: Único dono)">
+      </div>
+
+      <div class="field">
+        <label>Fotos</label>
+        <input type="file" id="fFotos" accept="image/*" multiple>
+        <div id="fotoPreview" class="foto-preview"></div>
+        <p class="admin-hint">A primeira foto da lista vira a miniatura do card. Arraste para reordenar.</p>
+      </div>
+
+      <div class="field field-inline">
+        <input type="checkbox" id="fVendido">
+        <label for="fVendido">Marcar como vendido (some do site, mas fica salvo)</label>
+      </div>
+
+      <div id="formError" class="admin-error" hidden></div>
+
+      <div class="admin-form-actions">
+        <button type="button" id="btnExcluir" class="btn btn-ghost" hidden>Excluir veículo</button>
+        <button type="submit" id="btnSalvar" class="btn btn-primary">Salvar veículo</button>
+      </div>
+    </form>
+  </main>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
