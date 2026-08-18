@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Estoque — Painel Admin MP Veículos</title>
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+<header class="admin-topbar">
+  <div class="admin-topbar-inner">
+    <span class="admin-brand"><img src="/assets/logo.png" alt="" class="admin-brand-logo">MP Veículos <small>admin</small></span>
+    <button id="btnLogout" class="btn btn-ghost admin-btn-sm">Sair</button>
+  </div>
+</header>
+
+<main class="admin-main">
+  <div class="admin-stats" id="adminStats"></div>
+
+  <div class="admin-main-head">
+    <h2>Estoque</h2>
+    <a id="btnNovo" href="/admin/veiculo.html" class="btn btn-primary">+ Novo veículo</a>
+  </div>
+
+  <div class="admin-toolbar">
+    <input type="search" id="listSearch" placeholder="Buscar por marca ou modelo...">
+    <select id="listFiltro">
+      <option value="ativos">Somente ativos</option>
+      <option value="vendidos">Somente vendidos</option>
+      <option value="todos">Todos</option>
+    </select>
+  </div>
+
+  <div id="listStatus" class="admin-status"></div>
+  <div id="listGrid" class="admin-grid"></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="/admin/js/common.js"></script>
+<script src="/admin/js/estoque.js"></script>
+</body>
+</html>

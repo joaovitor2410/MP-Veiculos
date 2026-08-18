@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Veículo — Painel Admin MP Veículos</title>
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+<header class="admin-topbar">
+  <div class="admin-topbar-inner">
+    <a href="/admin/estoque.html" class="btn btn-ghost admin-btn-sm">‹ Voltar</a>
+    <span class="admin-brand" id="formTitle">Novo veículo</span>
+    <span style="width:70px"></span>
+  </div>
+</header>
+
+<main class="admin-main admin-form-wrap">
+  <form id="vehicleForm">
+
+    <div class="form-section">
+      <h3 class="form-section-title">Dados do veículo</h3>
+      <div class="form-grid">
+        <div class="field">
+          <label for="fMarca">Marca *</label>
+          <input id="fMarca" required placeholder="Ex: Chevrolet">
+        </div>
+        <div class="field">
+          <label for="fModelo">Modelo *</label>
+          <input id="fModelo" required placeholder="Ex: Onix LT 1.0">
+        </div>
+        <div class="field">
+          <label for="fTipo">Tipo *</label>
+          <select id="fTipo" required>
+            <option value="hatch">Hatch</option>
+            <option value="sedan">Sedã</option>
+            <option value="suv">SUV</option>
+            <option value="picape">Picape</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fAno">Ano *</label>
+          <input id="fAno" type="number" required placeholder="2023">
+        </div>
+        <div class="field">
+          <label for="fKm">Km rodados *</label>
+          <input id="fKm" type="number" required placeholder="48000">
+        </div>
+        <div class="field">
+          <label for="fCambio">Câmbio *</label>
+          <select id="fCambio" required>
+            <option value="Manual">Manual</option>
+            <option value="Automático">Automático</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fCombustivel">Combustível *</label>
+          <input id="fCombustivel" required placeholder="Flex, Diesel, Híbrido...">
+        </div>
+        <div class="field">
+          <label for="fCor">Cor *</label>
+          <input id="fCor" required placeholder="Ex: Preto">
+        </div>
+        <div class="field">
+          <label for="fPreco">Preço (R$) *</label>
+          <input id="fPreco" type="number" step="1" required placeholder="59900">
+        </div>
+        <div class="field">
+          <label for="fCapaFoco">Enquadramento da capa (opcional)</label>
+          <input id="fCapaFoco" placeholder='Ex: 20% — só se a miniatura cortar o carro'>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3 class="form-section-title">Descrição e destaques</h3>
+      <div class="field">
+        <label for="fDesc">Descrição</label>
+        <textarea id="fDesc" rows="4" placeholder="Texto que aparece nos detalhes do veículo"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="fDestaqueInput">Destaques</label>
+        <div id="chipList" class="chip-list"></div>
+        <input id="fDestaqueInput" placeholder="Digite e aperte Enter (ex: Único dono)">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3 class="form-section-title">Fotos</h3>
+      <div class="field">
+        <div class="foto-actions">
+          <label for="fFotos" class="btn btn-outline foto-upload-btn">
+            ⬆ Enviar do computador
+            <input type="file" id="fFotos" accept="image/*" multiple hidden>
+          </label>
+          <button type="button" id="btnBiblioteca" class="btn btn-outline">🖼 Escolher da biblioteca</button>
+        </div>
+        <div id="fotoDropzone" class="foto-dropzone">
+          <div id="fotoPreview" class="foto-preview"></div>
+          <p id="fotoEmpty" class="foto-empty">Arraste fotos aqui, envie do computador ou escolha da biblioteca de fotos já cadastradas.</p>
+        </div>
+        <p class="admin-hint">A primeira foto da lista vira a miniatura do card. Arraste os quadrados para reordenar.</p>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3 class="form-section-title">Status</h3>
+      <div class="field field-inline">
+        <input type="checkbox" id="fVendido">
+        <label for="fVendido">Marcar como vendido (some do site, mas fica salvo)</label>
+      </div>
+    </div>
+
+    <div id="formError" class="admin-error" hidden></div>
+
+    <div class="admin-form-actions">
+      <button type="button" id="btnExcluir" class="btn btn-outline btn-danger" hidden>Excluir veículo</button>
+      <button type="submit" id="btnSalvar" class="btn btn-primary">Salvar veículo</button>
+    </div>
+  </form>
+</main>
+
+<!-- ---------- MODAL: BIBLIOTECA DE FOTOS JÁ EXISTENTES ---------- -->
+<div id="libraryOverlay" class="library-overlay" hidden>
+  <div class="library-modal">
+    <div class="library-head">
+      <h3>Biblioteca de fotos</h3>
+      <button type="button" id="libraryClose" class="btn btn-outline admin-btn-sm">Fechar</button>
+    </div>
+    <p class="admin-hint library-hint">Fotos que já estão salvas no site (sem precisar enviar de novo). Clique para adicionar ao veículo.</p>
+    <div id="libraryBody" class="library-body"></div>
+  </div>
+</div>
+
+<script src="/assets/js/local-photos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="/admin/js/common.js"></script>
+<script src="/admin/js/veiculo.js"></script>
+</body>
+</html>

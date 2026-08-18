@@ -3,88 +3,173 @@
 body{ background:var(--paper); }
 
 /* ---------- LOGIN ---------- */
+.admin-login-body{
+  background:var(--onyx);
+}
 .admin-login{
   min-height:100vh;
   display:flex; align-items:center; justify-content:center;
   padding:24px;
-  background:var(--onyx);
+  background:
+    radial-gradient(1100px 480px at 15% -10%, rgba(227,178,60,0.14), transparent 60%),
+    var(--onyx);
 }
 .admin-login-card{
-  width:100%; max-width:360px;
+  width:100%; max-width:380px;
   background:var(--card);
-  border-radius:10px;
-  padding:32px 24px;
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
+  border-radius:12px;
+  padding:36px 28px 30px;
+  box-shadow:0 24px 70px rgba(0,0,0,.45);
+  border-top:3px solid var(--gold);
 }
-.admin-login-card h1{
-  font-size:20px; text-align:center; margin-bottom:4px;
+.admin-login-logo{
+  display:block; height:52px; width:auto; margin:0 auto 14px;
 }
 .admin-login-sub{
   text-align:center; color:var(--graphite); font-size:13px;
-  margin-bottom:22px;
+  text-transform:uppercase; letter-spacing:.06em; font-weight:600;
+  margin-bottom:24px;
 }
 .admin-full{ width:100%; justify-content:center; margin-top:8px; }
+.admin-back-site{
+  display:block; text-align:center; margin-top:18px;
+  color:var(--graphite); font-size:12.5px; text-decoration:none;
+}
+.admin-back-site:hover{ color:var(--ink); }
 
 /* ---------- ESTRUTURA GERAL ---------- */
-.admin-app{ min-height:100vh; }
 .admin-topbar{
   background:var(--onyx); position:sticky; top:0; z-index:20;
   border-bottom:1px solid #000;
 }
 .admin-topbar-inner{
-  max-width:960px; margin:0 auto;
+  max-width:1040px; margin:0 auto;
   display:flex; align-items:center; justify-content:space-between;
-  padding:14px 16px;
+  padding:9px 16px;
 }
 .admin-brand{
+  display:flex; align-items:center; gap:8px;
   color:#fff; font-family:'Oswald',sans-serif; letter-spacing:.03em;
-  text-transform:uppercase; font-size:15px;
+  text-transform:uppercase; font-size:13.5px;
 }
-.admin-brand small{ color:var(--gold); text-transform:uppercase; margin-left:6px; }
-.admin-btn-sm{ padding:8px 14px; font-size:12px; min-height:38px; }
+.admin-brand-logo{ height:22px; width:auto; }
+.admin-brand small{ color:var(--gold); text-transform:uppercase; margin-left:2px; font-size:11px; }
+.admin-btn-sm{ padding:7px 13px; font-size:11.5px; min-height:32px; }
 
-.admin-main{ max-width:960px; margin:0 auto; padding:20px 16px 60px; }
+.admin-main{ max-width:1040px; margin:0 auto; padding:22px 16px 60px; }
 .admin-main-head{
   display:flex; align-items:center; justify-content:space-between;
   margin-bottom:16px; gap:12px; flex-wrap:wrap;
 }
 .admin-main-head h2{ font-size:20px; }
 
-.admin-status{ color:var(--graphite); font-size:14px; margin-bottom:12px; }
+.admin-status{ color:var(--graphite); font-size:13.5px; margin-bottom:14px; }
 .admin-error{
   background:#fdeceb; color:#b3261e; border:1px solid #f4c2be;
   padding:10px 12px; border-radius:6px; font-size:13px; margin:12px 0;
 }
 
+/* ---------- STATS (topo do estoque) ---------- */
+.admin-stats{
+  display:grid; gap:12px; margin-bottom:22px;
+  grid-template-columns:repeat(auto-fit, minmax(160px,1fr));
+}
+.stat-card{
+  background:var(--onyx); color:#fff;
+  border-radius:8px; padding:16px 18px;
+  border-bottom:2px solid var(--gold);
+}
+.stat-num{
+  font-family:'JetBrains Mono', monospace; font-weight:600;
+  font-size:22px; line-height:1.1; color:var(--gold);
+}
+.stat-card-wide .stat-num{ font-size:19px; }
+.stat-label{
+  font-size:11.5px; color:var(--chrome); text-transform:uppercase;
+  letter-spacing:.04em; margin-top:4px;
+}
+
+/* ---------- TOOLBAR (busca/filtro) ---------- */
+.admin-toolbar{
+  display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;
+}
+.admin-toolbar input[type="search"]{
+  flex:2 1 240px; border:1px solid var(--chrome-line); border-radius:6px;
+  padding:11px 12px; font-family:inherit; font-size:14.5px; background:#fff;
+}
+.admin-toolbar select{
+  flex:1 1 160px; border:1px solid var(--chrome-line); border-radius:6px;
+  padding:11px 12px; font-family:inherit; font-size:14.5px; background:#fff;
+}
+.admin-toolbar input:focus, .admin-toolbar select:focus{
+  outline:2px solid var(--gold); outline-offset:1px;
+}
+
 /* ---------- GRID / CARDS DA LISTA ---------- */
 .admin-grid{
-  display:grid; gap:14px;
+  display:grid; gap:16px;
   grid-template-columns:repeat(auto-fill, minmax(260px,1fr));
 }
 .admin-card{
   background:var(--card); border:1px solid var(--chrome-line);
   border-radius:8px; overflow:hidden; display:flex; flex-direction:column;
+  transition:box-shadow .15s, transform .15s;
 }
+.admin-card:hover{ box-shadow:0 16px 32px -18px rgba(14,15,17,0.28); transform:translateY(-2px); }
 .admin-card-media{
   aspect-ratio:4/3; background:var(--paper);
   display:flex; align-items:center; justify-content:center; overflow:hidden;
   position:relative;
 }
 .admin-card-media img{ width:100%; height:100%; object-fit:cover; }
+.admin-card-noimg{
+  color:var(--graphite); font-size:13px; text-transform:uppercase;
+  letter-spacing:.04em;
+}
 .admin-card-badge{
   position:absolute; top:8px; left:8px;
   background:rgba(14,15,17,.75); color:#fff; font-size:11px;
   padding:3px 8px; border-radius:4px; font-family:'JetBrains Mono',monospace;
+  z-index:1;
 }
 .admin-card-badge.sold{ background:#b3261e; }
-.admin-card-body{ padding:12px 14px; display:flex; flex-direction:column; gap:6px; flex:1; }
+.admin-card-photocount{
+  position:absolute; top:8px; right:8px;
+  background:rgba(14,15,17,.75); color:#fff; font-size:11px;
+  padding:3px 8px; border-radius:4px; font-family:'JetBrains Mono',monospace;
+  z-index:1;
+}
+.admin-card-body{ padding:13px 14px 14px; display:flex; flex-direction:column; gap:6px; flex:1; }
 .admin-card-title{ font-weight:600; font-size:14.5px; }
 .admin-card-sub{ font-size:12.5px; color:var(--graphite); }
-.admin-card-price{ font-family:'JetBrains Mono',monospace; font-weight:600; margin-top:auto; }
+.admin-card-price{
+  font-family:'JetBrains Mono',monospace; font-weight:600; margin-top:auto;
+  color:var(--gold-deep); font-size:15px;
+}
 .admin-card-actions{ display:flex; gap:8px; margin-top:8px; }
 .admin-card-actions .btn{ flex:1; padding:9px 10px; font-size:12px; min-height:38px; }
 
+/* ---------- BOTÃO OUTLINE (fundo claro: cards, formulário) ----------
+   .btn-ghost (de styles.css) é texto branco, feito pra fundo escuro
+   (topbar). Em fundo claro ele fica invisível — por isso esta variante. */
+.btn-outline{
+  background:#fff; color:var(--ink); border:1px solid var(--chrome-line);
+}
+.btn-outline:hover{ border-color:var(--gold); background:var(--paper); }
+.btn-danger{ color:#b3261e; border-color:#f4c2be; }
+.btn-danger:hover{ background:#fdeceb; border-color:#b3261e; }
+
 /* ---------- FORMULÁRIO ---------- */
+.admin-form-wrap{ max-width:760px; }
+.form-section{
+  background:var(--card); border:1px solid var(--chrome-line); border-radius:8px;
+  padding:20px; margin-bottom:16px;
+}
+.form-section-title{
+  font-size:13px; color:var(--gold-deep);
+  margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--chrome-line);
+}
+.form-section .field:last-child{ margin-bottom:0; }
 .admin-form-wrap .field{ margin-bottom:16px; }
 .admin-form-wrap label{
   display:block; font-size:12.5px; font-weight:600; color:var(--graphite);
@@ -94,6 +179,9 @@ body{ background:var(--paper); }
 .field input[type="number"], .field select, .field textarea{
   width:100%; border:1px solid var(--chrome-line); border-radius:6px;
   padding:11px 12px; font-family:inherit; font-size:15px; background:#fff;
+}
+.field input:focus, .field select:focus, .field textarea:focus{
+  outline:2px solid var(--gold); outline-offset:1px;
 }
 .field textarea{ resize:vertical; }
 .field-inline{ display:flex; align-items:center; gap:10px; }
@@ -116,9 +204,18 @@ body{ background:var(--paper); }
   font-size:15px; line-height:1; padding:2px 6px;
 }
 
-.foto-preview{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+/* ---------- FOTOS ---------- */
+.foto-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+.foto-upload-btn{ cursor:pointer; }
+.foto-dropzone{
+  border:2px dashed var(--chrome-line); border-radius:8px;
+  padding:16px; transition:border-color .15s, background .15s;
+}
+.foto-dropzone.drag-active{ border-color:var(--gold); background:#fdf7e8; }
+.foto-preview{ display:flex; flex-wrap:wrap; gap:10px; }
+.foto-empty{ font-size:13px; color:var(--graphite); text-align:center; padding:14px 6px; }
 .foto-item{
-  position:relative; width:88px; height:88px; border-radius:6px; overflow:hidden;
+  position:relative; width:92px; height:92px; border-radius:6px; overflow:hidden;
   border:1px solid var(--chrome-line); cursor:grab;
 }
 .foto-item img{ width:100%; height:100%; object-fit:cover; }
@@ -127,13 +224,55 @@ body{ background:var(--paper); }
   color:#fff; border:none; border-radius:50%; width:20px; height:20px;
   font-size:12px; cursor:pointer; line-height:1;
 }
+.foto-item .foto-capa{
+  position:absolute; bottom:0; left:0; right:0; text-align:center;
+  background:var(--gold); color:var(--ink); font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.03em; padding:2px 0;
+}
 .foto-item.uploading{ opacity:.5; }
 .foto-item.dragging{ opacity:.3; }
 .admin-hint{ font-size:12px; color:var(--graphite); margin-top:8px; }
 
 .admin-form-actions{
   display:flex; gap:10px; justify-content:flex-end; margin-top:24px;
-  padding-top:16px; border-top:1px solid var(--chrome-line);
+}
+
+/* ---------- BIBLIOTECA DE FOTOS (modal) ---------- */
+.library-overlay{
+  position:fixed; inset:0; background:rgba(14,15,17,.6);
+  display:flex; align-items:center; justify-content:center;
+  padding:20px; z-index:100;
+}
+.library-modal{
+  background:#fff; border-radius:10px; width:100%; max-width:680px;
+  max-height:82vh; display:flex; flex-direction:column; overflow:hidden;
+}
+.library-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 20px; border-bottom:1px solid var(--chrome-line);
+}
+.library-head h3{ font-size:16px; }
+.library-hint{ padding:12px 20px 0; margin-top:0; }
+.library-body{ padding:16px 20px 20px; overflow-y:auto; }
+.library-group{ margin-bottom:18px; }
+.library-group h4{
+  font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:13px;
+  letter-spacing:.04em; color:var(--graphite); margin-bottom:8px;
+}
+.library-grid{
+  display:grid; gap:8px;
+  grid-template-columns:repeat(auto-fill, minmax(72px,1fr));
+}
+.library-thumb{
+  position:relative; aspect-ratio:1; border-radius:6px; overflow:hidden;
+  border:1px solid var(--chrome-line); padding:0; cursor:pointer; background:none;
+}
+.library-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+.library-thumb.added{ border-color:var(--gold); }
+.library-thumb.added img{ opacity:.55; }
+.library-check{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  background:rgba(227,178,60,.35); color:var(--ink); font-weight:700; font-size:18px;
 }
 
 /* Mobile: forçar 16px nos campos (evita zoom automático do iOS Safari) */
@@ -143,4 +282,6 @@ body{ background:var(--paper); }
   .admin-form-actions .btn{ width:100%; justify-content:center; }
   .admin-main-head{ flex-direction:column; align-items:stretch; }
   .admin-main-head .btn{ justify-content:center; }
+  .foto-actions{ flex-direction:column; }
+  .foto-actions .btn{ justify-content:center; }
 }
