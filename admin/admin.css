@@ -1,5 +1,11 @@
 /* Reaproveita as variáveis de cor/fonte definidas em assets/css/styles.css */
 
+/* Garante que o atributo hidden sempre esconda o elemento, mesmo quando
+   outra regra (ex: .btn{display:inline-flex}, .library-overlay{display:flex})
+   define display explicitamente — regra de autor normalmente vence o
+   display:none padrão do navegador para [hidden] na mesma especificidade. */
+[hidden]{ display:none !important; }
+
 body{ background:var(--paper); }
 
 /* ---------- LOGIN ---------- */
