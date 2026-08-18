@@ -23,6 +23,16 @@ function showView(view) {
   view.hidden = false;
 }
 
+/* Fotos salvas antes de existir upload (ex: "assets/js/vehicles/spin/spin1.jpg")
+   são gravadas com caminho relativo à raiz do site. Como o painel /admin
+   vive uma pasta abaixo da raiz, precisamos ajustar esse caminho só para
+   exibir a prévia aqui dentro — o valor salvo no banco continua intacto. */
+function displayUrl(url) {
+  if (!url) return url;
+  if (/^(https?:)?\/\//.test(url) || url.startsWith('blob:') || url.startsWith('/')) return url;
+  return '../' + url;
+}
+
 /* ---------- SESSÃO / LOGIN ---------- */
 async function checkSession() {
   const { data: { session } } = await sb.auth.getSession();
@@ -61,6 +71,8 @@ function formatPrice(v) {
   return Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 0 });
 }
 
+let allVehicles = [];
+
 async function loadList() {
   const status = document.getElementById('listStatus');
   const grid = document.getElementById('listGrid');
@@ -72,17 +84,67 @@ async function loadList() {
     status.textContent = 'Erro ao carregar: ' + error.message;
     return;
   }
-  status.textContent = data.length + ' veículo(s) cadastrado(s).';
-  data.forEach(v => grid.appendChild(buildCard(v)));
+  allVehicles = data;
+  renderStats();
+  renderList();
 }
+
+function renderStats() {
+  const stats = document.getElementById('adminStats');
+  const ativos = allVehicles.filter(v => !v.vendido);
+  const vendidos = allVehicles.filter(v => v.vendido);
+  const valorEstoque = ativos.reduce((sum, v) => sum + Number(v.preco || 0), 0);
+
+  stats.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-num">${ativos.length}</div>
+      <div class="stat-label">Ativos no site</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">${vendidos.length}</div>
+      <div class="stat-label">Vendidos</div>
+    </div>
+    <div class="stat-card stat-card-wide">
+      <div class="stat-num">${formatPrice(valorEstoque)}</div>
+      <div class="stat-label">Valor do estoque ativo</div>
+    </div>
+  `;
+}
+
+function renderList() {
+  const status = document.getElementById('listStatus');
+  const grid = document.getElementById('listGrid');
+  const search = document.getElementById('listSearch').value.trim().toLowerCase();
+  const filtro = document.getElementById('listFiltro').value;
+
+  let list = allVehicles.filter(v => {
+    const text = (v.marca + ' ' + v.modelo).toLowerCase();
+    const matchSearch = !search || text.includes(search);
+    const matchFiltro = filtro === 'todos' || (filtro === 'ativos' ? !v.vendido : v.vendido);
+    return matchSearch && matchFiltro;
+  });
+
+  grid.innerHTML = '';
+  if (!list.length) {
+    status.textContent = 'Nenhum veículo encontrado.';
+    return;
+  }
+  status.textContent = list.length + ' veículo(s) encontrado(s) de ' + allVehicles.length + ' cadastrado(s).';
+  list.forEach(v => grid.appendChild(buildCard(v)));
+}
+
+document.getElementById('listSearch').addEventListener('input', renderList);
+document.getElementById('listFiltro').addEventListener('change', renderList);
 
 function buildCard(v) {
   const el = document.createElement('div');
   el.className = 'admin-card';
-  const capa = (v.fotos && v.fotos[0]) ? `<img src="${v.fotos[0]}" alt="">` : '';
+  const capa = (v.fotos && v.fotos[0]) ? `<img src="${displayUrl(v.fotos[0])}" alt="">` : '<div class="admin-card-noimg">Sem foto</div>';
+  const qtdFotos = v.fotos ? v.fotos.length : 0;
   el.innerHTML = `
     <div class="admin-card-media">
       <span class="admin-card-badge ${v.vendido ? 'sold' : ''}">${v.vendido ? 'Vendido' : '#' + v.id}</span>
+      ${qtdFotos ? `<span class="admin-card-photocount">📷 ${qtdFotos}</span>` : ''}
       ${capa}
     </div>
     <div class="admin-card-body">
@@ -141,8 +203,6 @@ function openForm(v) {
   showView(viewForm);
 }
 
-document.getElementById('btnVoltar').addEventListener('click', () => showView(viewList));
-
 /* ---- destaques (chips) ---- */
 let destaques = [];
 const chipList = document.getElementById('chipList');
@@ -169,16 +229,19 @@ destaqueInput.addEventListener('keydown', (e) => {
 
 /* ---- fotos (upload + reordenar + remover) ---- */
 const fotoPreview = document.getElementById('fotoPreview');
+const fotoEmpty = document.getElementById('fotoEmpty');
+const fotoDropzone = document.getElementById('fotoDropzone');
 const fFotosInput = document.getElementById('fFotos');
 
 function renderFotos() {
   fotoPreview.innerHTML = '';
+  fotoEmpty.hidden = fotos.length > 0;
   fotos.forEach((f, i) => {
     const item = document.createElement('div');
     item.className = 'foto-item' + (f.uploading ? ' uploading' : '');
     item.draggable = true;
     item.dataset.i = i;
-    item.innerHTML = `<img src="${f.url}" alt=""><button type="button" class="foto-remove">✕</button>`;
+    item.innerHTML = `<img src="${displayUrl(f.url)}" alt="">${i === 0 ? '<span class="foto-capa">Capa</span>' : ''}<button type="button" class="foto-remove">✕</button>`;
     item.querySelector('.foto-remove').addEventListener('click', () => {
       fotos.splice(i, 1);
       renderFotos();
@@ -188,7 +251,9 @@ function renderFotos() {
     item.addEventListener('dragover', (e) => e.preventDefault());
     item.addEventListener('drop', (e) => {
       e.preventDefault();
-      const from = Number(document.querySelector('.foto-item.dragging').dataset.i);
+      const draggingEl = document.querySelector('.foto-item.dragging');
+      if (!draggingEl) return;
+      const from = Number(draggingEl.dataset.i);
       const to = i;
       const [moved] = fotos.splice(from, 1);
       fotos.splice(to, 0, moved);
@@ -198,15 +263,14 @@ function renderFotos() {
   });
 }
 
-fFotosInput.addEventListener('change', async () => {
-  const files = Array.from(fFotosInput.files);
-  fFotosInput.value = '';
+async function uploadFiles(files) {
   for (const file of files) {
+    if (!file.type.startsWith('image/')) continue;
     const placeholder = { url: URL.createObjectURL(file), uploading: true };
     fotos.push(placeholder);
     renderFotos();
 
-    const safeName = file.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9.]/g, '-');
+    const safeName = file.name.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z0-9.]/g, '-');
     const path = `${Date.now()}-${safeName}`;
     const { error } = await sb.storage.from(FOTOS_BUCKET).upload(path, file, { upsert: false });
     if (error) {
@@ -220,7 +284,70 @@ fFotosInput.addEventListener('change', async () => {
     placeholder.uploading = false;
     renderFotos();
   }
+}
+
+fFotosInput.addEventListener('change', () => {
+  const files = Array.from(fFotosInput.files);
+  fFotosInput.value = '';
+  uploadFiles(files);
 });
+
+/* Arrastar arquivos do computador direto para a área de fotos */
+['dragenter', 'dragover'].forEach(evt => {
+  fotoDropzone.addEventListener(evt, (e) => {
+    e.preventDefault();
+    fotoDropzone.classList.add('drag-active');
+  });
+});
+['dragleave', 'drop'].forEach(evt => {
+  fotoDropzone.addEventListener(evt, (e) => {
+    e.preventDefault();
+    fotoDropzone.classList.remove('drag-active');
+  });
+});
+fotoDropzone.addEventListener('drop', (e) => {
+  if (document.querySelector('.foto-item.dragging')) return; // reordenação interna, não upload
+  const files = Array.from(e.dataTransfer.files || []);
+  if (files.length) uploadFiles(files);
+});
+
+/* ---- biblioteca de fotos já existentes no código ---- */
+const libraryOverlay = document.getElementById('libraryOverlay');
+const libraryBody = document.getElementById('libraryBody');
+
+function renderLibrary() {
+  const usadas = new Set(fotos.map(f => f.url));
+  libraryBody.innerHTML = (typeof LOCAL_PHOTO_LIBRARY !== 'undefined' ? LOCAL_PHOTO_LIBRARY : []).map(grupo => `
+    <div class="library-group">
+      <h4>${grupo.grupo}</h4>
+      <div class="library-grid">
+        ${grupo.fotos.map(url => `
+          <button type="button" class="library-thumb ${usadas.has(url) ? 'added' : ''}" data-url="${url}">
+            <img src="${displayUrl(url)}" alt="">
+            ${usadas.has(url) ? '<span class="library-check">✓</span>' : ''}
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  libraryBody.querySelectorAll('.library-thumb').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const url = btn.dataset.url;
+      if (fotos.some(f => f.url === url)) return;
+      fotos.push({ url, uploading: false });
+      renderFotos();
+      renderLibrary();
+    });
+  });
+}
+
+document.getElementById('btnBiblioteca').addEventListener('click', () => {
+  renderLibrary();
+  libraryOverlay.hidden = false;
+});
+document.getElementById('libraryClose').addEventListener('click', () => { libraryOverlay.hidden = true; });
+libraryOverlay.addEventListener('click', (e) => { if (e.target === libraryOverlay) libraryOverlay.hidden = true; });
 
 /* ---- salvar / excluir ---- */
 document.getElementById('vehicleForm').addEventListener('submit', async (e) => {
